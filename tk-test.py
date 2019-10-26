@@ -1,25 +1,49 @@
 # TEST 3
 from tkinter import *
+import time
 
 root = Tk()
-def retrieve_input():
-    inputValue=textBox.get("1.0","end-1c")
-    print(inputValue)
 
-textBox=Text(root, height=2, width=10)
+message = StringVar()
+quote = "To be, or not to be--that is the question"
+quote_array = quote.split(" ")
+current_split_quote = quote_array[0]
+message.set(current_split_quote)
+Instruction = Label(root, textvariable=message,  font='size, 20').pack()
+
+textBox=Text(root, height=2, width=100)
 textBox.pack()
-buttonCommit=Button(root, height=1, width=10, text="Commit", 
-                    command=lambda: retrieve_input())
-buttonCommit.pack()
 
-w = Label(root, text="Hello, world!")
+# This function is called whenever a key is released
+split_counter = 1
+def typing(event):
+    global split_counter, current_split_quote
+    curr_input = textBox.get("1.0", "end-1c") 
+    # print(curr_input + " = " + current_split_quote + "?")
+    if (current_split_quote in curr_input):
+        if (split_counter < len(quote_array)):
+            current_split_quote += " " + quote_array[split_counter]
+            message.set(current_split_quote)
+            split_counter += 1
+        else: print("COMPLETE!!!")
+
+textBox.bind('<KeyRelease>', typing) # bind responseEntry to keyboard keys being released, and have it execute the function typing when this occurs
+
+
+# WINDOW
 root.overrideredirect(True)
 root.geometry("{0}x{1}+0+0".format(root.winfo_screenwidth(), root.winfo_screenheight()))
 root.focus_set()  # <-- move focus to this widget
 root.bind("<Escape>", lambda e: e.widget.quit())
-w.pack()
 
 root.mainloop()
+
+
+
+
+
+
+
 
 # TEST 1
 
