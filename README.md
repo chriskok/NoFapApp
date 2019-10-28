@@ -22,6 +22,7 @@ python NoFapApp.py
 
 ## Issues
 - Can easily Alt+Tab out of the window. Need to make it come to focus automatically.
+- No way to stop distributable exe file currently other than manually through Task Manager.
 - Multiple screens.
 - Porn too dark or small to categorize -> potentially running the classifier on multiple smaller parts of the screen or using the more complex object localization technique with NudeNet.
 - Sound will still be on.

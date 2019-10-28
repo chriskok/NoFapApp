@@ -14,8 +14,8 @@ def main():
     filepath = 'imgs/test.png'
     classifier = NudeClassifier('models/classifier_model')
 
-    # while True:
-    for i in range (10):
+    while True:
+    # for i in range (10):
         print("taking screenshot")
         myScreenshot = pyautogui.screenshot()
         myScreenshot.save(filepath)
