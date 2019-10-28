@@ -1,11 +1,16 @@
 import time
 import pyautogui
-from nudenet import NudeClassifier
-
 import tkinter as tk
 import time
+import csv
+import random 
+from nudenet import NudeClassifier
+
+BIBLE_CONTENT = []
 
 def main():
+    readBible()
+
     filepath = 'imgs/test.png'
     classifier = NudeClassifier('models/classifier_model')
 
@@ -20,6 +25,26 @@ def main():
         print(classified_dict[filepath]['unsafe'])
         if (classified_dict[filepath]['unsafe'] > 0.5):
             fullscreen_popup()
+        
+        time.sleep(3)
+
+def readBible():
+    global BIBLE_CONTENT
+    with open('t_asv.csv') as csvfile:
+        readCSV = csv.reader(csvfile, delimiter=',')
+        firstline = True
+        for row in readCSV:
+            if (firstline): 
+                firstline = False
+                continue
+            if (int(row[1])==1):
+                BIBLE_CONTENT.append(row[4])
+
+        print("Bible Content: {}".format(len(BIBLE_CONTENT)))
+
+def getRandomVerse():
+    global BIBLE_CONTENT
+    return random.choice(BIBLE_CONTENT)
 
 def fullscreen_popup():
 
@@ -30,7 +55,7 @@ def fullscreen_popup():
     root = tk.Tk()
     root.overrideredirect(True)
     root.geometry("{0}x{1}+0+0".format(root.winfo_screenwidth(), root.winfo_screenheight()))
-    root.bind("<Escape>", lambda e: e.widget.quit())
+    root.bind("<Escape>", lambda e: root.destroy())
     root.config(bg=BG_COLOR)
 
     # LABEL
@@ -46,8 +71,8 @@ def fullscreen_popup():
 
     # MESSAGE TEXT
     message = tk.StringVar()
-    quote = "hehehe"
-    quote = """Scientists have finally been able to read the oldest biblical text ever found. The 2,000-year-old scroll has been in the hands of archaeologists for decades. But it hasn’t been possible to read it, since it was too dangerous to open the charred and brittle scroll. Scientists have now been able to read it, using special imaging technology that can look into what’s inside. And it has found what was in there: the earliest evidence of a biblical text in its standardised form."""
+    quote = getRandomVerse()
+    # quote = """Scientists have finally been able to read the oldest biblical text ever found. The 2,000-year-old scroll has been in the hands of archaeologists for decades. But it hasn’t been possible to read it, since it was too dangerous to open the charred and brittle scroll. Scientists have now been able to read it, using special imaging technology that can look into what’s inside. And it has found what was in there: the earliest evidence of a biblical text in its standardised form."""
     quote_array = quote.split(" ")
     current_split_quote = quote_array[0]
     message.set(current_split_quote)
@@ -80,5 +105,9 @@ def fullscreen_popup():
 
 
 if __name__ == "__main__":
-    main()
-    # fullscreen_popup()
+    # main()
+
+    readBible()
+    for i in range(5):
+        print(i)
+        fullscreen_popup()
