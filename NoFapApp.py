@@ -105,9 +105,9 @@ def fullscreen_popup():
 
 
 if __name__ == "__main__":
-    # main()
+    main()
 
-    readBible()
-    for i in range(5):
-        print(i)
-        fullscreen_popup()
+    # readBible()
+    # for i in range(5):
+    #     print(i)
+    #     fullscreen_popup()
